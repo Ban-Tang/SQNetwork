@@ -68,7 +68,7 @@ typedef void (^AFURLSessionTaskProgressBlock)(NSProgress *);
 
 @class SQRequest;
 
-typedef void (^SQRequestCompletionBlock)(__kindof SQRequest *request);
+typedef void (^SQRequestCompletionBlock)(__kindof SQRequest *request, __nullable id formattedData);
 
 
 /**
@@ -110,6 +110,11 @@ typedef void (^SQRequestCompletionBlock)(__kindof SQRequest *request);
 
 
 
+/**
+ The SQRequestFormatter protocol defines several optional methods that can be
+ used for formatting the response data. You can use these method to convert the response
+ json to target model.
+ */
 @protocol SQRequestFormatter <NSObject>
 
 @optional
@@ -123,8 +128,8 @@ typedef void (^SQRequestCompletionBlock)(__kindof SQRequest *request);
 
 /**
  Called on the main thread after request succeeded.
- If both completion mehtod `formattedDataAfterRequestCompletePreprocessor`, the formatted data will be
- replaced by the method.
+ If both implement mehtod `formattedDataAfterRequestCompletePreprocessor`, the formatted data will be
+ replaced by below method.
  
  @return  return the formatted data, it can be the final model or reformed dictionary.
  */
@@ -170,9 +175,12 @@ typedef void (^SQRequestCompletionBlock)(__kindof SQRequest *request);
 
 
 /**
- Tell the delegate that the request has finished successfully with the formatted data.
+ Tell the delegate that the request has finished successfully with the formatted data. This method
+ only will be called when the `dataFormatter` of this request implement formatter methods in protocol
+ `SQRequestFormatter`.
  
  @param request   The corresponding Request.
+ 
  @param response  Fromatted response data by request formatter confirmed protocol `SQRequestFormatter`.
  */
 - (void)request:(__kindof SQRequest *)request finishedWithFormattedResponse:(nullable id)response;
@@ -183,6 +191,9 @@ typedef void (^SQRequestCompletionBlock)(__kindof SQRequest *request);
 
 
 
+/**
+ Request config protocol. Subclass must confirm it.
+ */
 @protocol SQRequest <NSObject>
 
 #pragma mark - Subclass Confirm
@@ -292,8 +303,8 @@ typedef void (^SQRequestCompletionBlock)(__kindof SQRequest *request);
 
 
 /**
- SQRequest is the model class of network request. It provides many options
- for constructing request.
+ SQRequest is the abstract class of network request, all request API must subclass of
+ this class. It provides many options for constructing request.
  
  It also provides the response info when request complete.
  */
@@ -317,7 +328,7 @@ typedef void (^SQRequestCompletionBlock)(__kindof SQRequest *request);
 
 
 /**
- Data formatter used to format the data to target model.
+ Data formatter used to format the data to target model. Default is nil.
  */
 @property (nonatomic, weak, nullable) id<SQRequestFormatter> dataFormatter;
 

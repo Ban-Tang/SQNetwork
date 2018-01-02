@@ -360,16 +360,22 @@
             formattedData = [request.dataFormatter formattedDataAfterRequestCompleteFilter:request];
         }
         
-        if (request.delegate != nil) {
-            if (formattedData) {
+        if (formattedData) {
+            if (request.delegate) {
                 [request.delegate request:request finishedWithFormattedResponse:formattedData];
-            }else {
+            }
+            if (request.successCompletionBlock) {
+                request.successCompletionBlock(request, formattedData);
+            }
+        }else {
+            if (request.delegate) {
                 [request.delegate requestFinished:request];
             }
+            if (request.successCompletionBlock) {
+                request.successCompletionBlock(request, nil);
+            }
         }
-        if (request.successCompletionBlock) {
-            request.successCompletionBlock(request);
-        }
+        
         [request toggleAccessoriesDidStopCallBack];
     });
 }
@@ -408,7 +414,7 @@
             [request.delegate requestFailed:request];
         }
         if (request.failureCompletionBlock) {
-            request.failureCompletionBlock(request);
+            request.failureCompletionBlock(request, nil);
         }
         [request toggleAccessoriesDidStopCallBack];
     });

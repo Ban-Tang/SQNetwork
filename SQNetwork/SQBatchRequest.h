@@ -135,10 +135,12 @@ typedef void (^SQBatchRequestCompletionBlock)(__kindof SQBatchRequest *Request);
 
 @interface SQRequest (BatchRequest)
 
-/// Indicator that if going on other requests when this request failed. Default is NO.
-///
-/// If this property is YES, the `failedRequest` of the batch request operation will be the
-/// last failed request. And the failed request will not break the batch request operation.
+/**
+ Indicator that if going on other requests when this request failed. Default is NO.
+
+ If this property is YES, the `failedRequest` of the batch request operation will be the
+ last failed request. And the failed request will not break the batch request operation.
+ */
 @property (nonatomic, assign) BOOL ignoreFailedInBatchReqeust;
 
 @end

@@ -30,6 +30,7 @@
 		7D256D9C1FFB850500FAEEAD /* SQNetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D871FF7BB3700FAEEAD /* SQNetworkConfig.m */; };
 		7D256D9D1FFB850700FAEEAD /* SQNetworkPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D811FF7BB1600FAEEAD /* SQNetworkPrivate.m */; };
 		7D256D9E1FFB850800FAEEAD /* SQNetworkPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D811FF7BB1600FAEEAD /* SQNetworkPrivate.m */; };
+		7D256DA11FFB8F7B00FAEEAD /* SQGeneralRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256DA01FFB8F7B00FAEEAD /* SQGeneralRequest.m */; };
 		7D553C951FF614540041C91C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D553C941FF614540041C91C /* AppDelegate.m */; };
 		7D553C981FF614540041C91C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D553C971FF614540041C91C /* ViewController.m */; };
 		7D553C9B1FF614540041C91C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D553C991FF614540041C91C /* Main.storyboard */; };
@@ -79,6 +80,8 @@
 		7D256D8C1FFB774600FAEEAD /* SQBatchRequestAgent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SQBatchRequestAgent.h; sourceTree = "<group>"; };
 		7D256D8D1FFB774600FAEEAD /* SQBatchRequestAgent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SQBatchRequestAgent.m; sourceTree = "<group>"; };
 		7D256D8F1FFB7EBF00FAEEAD /* SQNetwork.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SQNetwork.podspec; sourceTree = "<group>"; };
+		7D256D9F1FFB8F7B00FAEEAD /* SQGeneralRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SQGeneralRequest.h; sourceTree = "<group>"; };
+		7D256DA01FFB8F7B00FAEEAD /* SQGeneralRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SQGeneralRequest.m; sourceTree = "<group>"; };
 		7D553C901FF614540041C91C /* SQNetwork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SQNetwork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D553C931FF614540041C91C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7D553C941FF614540041C91C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -184,6 +187,8 @@
 				7D553CC91FF643F60041C91C /* SQNetwork.h */,
 				7D553CCA1FF652B70041C91C /* SQRequest.h */,
 				7D553CCB1FF652B70041C91C /* SQRequest.m */,
+				7D256D9F1FFB8F7B00FAEEAD /* SQGeneralRequest.h */,
+				7D256DA01FFB8F7B00FAEEAD /* SQGeneralRequest.m */,
 				7D256D891FF7BD1700FAEEAD /* SQBatchRequest.h */,
 				7D256D8A1FF7BD1700FAEEAD /* SQBatchRequest.m */,
 				7D256D8C1FFB774600FAEEAD /* SQBatchRequestAgent.h */,
@@ -527,6 +532,7 @@
 				7D256D8E1FFB774600FAEEAD /* SQBatchRequestAgent.m in Sources */,
 				7D256D881FF7BB3700FAEEAD /* SQNetworkConfig.m in Sources */,
 				7D553C981FF614540041C91C /* ViewController.m in Sources */,
+				7D256DA11FFB8F7B00FAEEAD /* SQGeneralRequest.m in Sources */,
 				7D256D851FF7BB2200FAEEAD /* SQNetworkCache.m in Sources */,
 				7D553CA31FF614540041C91C /* main.m in Sources */,
 				7D553C951FF614540041C91C /* AppDelegate.m in Sources */,

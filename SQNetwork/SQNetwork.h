@@ -19,15 +19,17 @@
     FOUNDATION_EXPORT const unsigned char SQNetworkVersionString[];
 
     #import <SQNetwork/SQRequest.h>
-    #import <SQNetwork/SQNetworkAgent.h>
     #import <SQNetwork/SQBatchRequest.h>
+    #import <SQNetwork/SQNetworkAgent.h>
+    #import <SQNetwork/SQNetworkCache.h>
     #import <SQNetwork/SQNetworkConfig.h>
 
 #else
 
     #import "SQRequest.h"
-    #import "SQNetworkAgent.h"
     #import "SQBatchRequest.h"
+    #import "SQNetworkAgent.h"
+    #import "SQNetworkCache.h"
     #import "SQNetworkConfig.h"
 
 #endif /* __has_include */
