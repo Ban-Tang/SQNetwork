@@ -8,6 +8,10 @@
 
 #import "SQRequest.h"
 
+#ifndef SQ_SUBCLASSING_RESTRICTED
+#define SQ_SUBCLASSING_RESTRICTED __attribute__((objc_subclassing_restricted))
+#endif
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -16,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  This request will provide several property for easy API requst.
  */
-__attribute__((objc_subclassing_restricted))
+SQ_SUBCLASSING_RESTRICTED
 @interface SQGeneralRequest : SQRequest <SQRequest>
 
 /// All below property is confirmed protocol `SQRequest`, more info see `SQRequest`.
