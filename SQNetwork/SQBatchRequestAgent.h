@@ -12,20 +12,28 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class SQBatchRequest;
 
-///  SQBatchRequestAgent handles batch request management. It keeps track of all
-///  the batch requests.
+/**
+ SQBatchRequestAgent handles batch request management. It keeps track of all
+ the batch requests.
+ */
 @interface SQBatchRequestAgent : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-///  Get the shared batch request agent.
+/**
+ Get the shared batch request agent.
+ */
 + (SQBatchRequestAgent *)sharedAgent;
 
-///  Add a batch request.
+/**
+ Add a batch request.
+ */
 - (void)addBatchRequest:(SQBatchRequest *)request;
 
-///  Remove a previously added batch request.
+/**
+ Remove a previously added batch request.
+ */
 - (void)removeBatchRequest:(SQBatchRequest *)request;
 
 @end

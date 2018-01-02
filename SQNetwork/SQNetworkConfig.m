@@ -35,7 +35,6 @@
     if (self) {
         _baseUrl = @"";
         _cdnUrl = @"";
-        _cacheDirPathFilters = [NSMutableArray array];
         _securityPolicy = [AFSecurityPolicy defaultPolicy];
         _debugLogEnabled = NO;
     }
@@ -51,6 +50,9 @@
 }
 
 - (void)addCacheDirPathFilter:(id<SQCacheDirPathFilterProtocol>)filter {
+    if (_cacheDirPathFilters == nil) {
+        _cacheDirPathFilters = [NSMutableArray arrayWithCapacity:0];
+    }
     [_cacheDirPathFilters addObject:filter];
 }
 

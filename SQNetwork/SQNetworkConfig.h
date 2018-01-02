@@ -52,32 +52,57 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
-///  Return a shared config object.
+/**
+ Return a shared config object.
+ */
 + (SQNetworkConfig *)sharedConfig;
 
 
-///  Request base URL, such as "http://www.ibantang.com". Default is empty string.
+/**
+ Request base URL, such as "http://www.example.com". Default is empty string.
+ */
 @property (nonatomic, strong) NSString *baseUrl;
-///  Request CDN URL. Default is empty string.
+
+/**
+ Request CDN URL. Default is empty string.
+ */
 @property (nonatomic, strong) NSString *cdnUrl;
-///  URL filters. See also `SQUrlFilterProtocol`.
+
+/**
+ URL filters. See also `SQUrlFilterProtocol`.
+ */
 @property (nonatomic, strong, readonly) id<SQUrlFilterProtocol> urlFilter;
-///  Cache path filters. See also `SQCacheDirPathFilterProtocol`.
+
+/**
+ Cache path filters. See also `SQCacheDirPathFilterProtocol`.
+ */
 @property (nonatomic, strong, readonly) NSArray<id<SQCacheDirPathFilterProtocol>> *cacheDirPathFilters;
-///  Security policy will be used by AFNetworking. See also `AFSecurityPolicy`.
+
+/**
+ Security policy will be used by AFNetworking. See also `AFSecurityPolicy`.
+ */
 @property (nonatomic, strong) AFSecurityPolicy *securityPolicy;
-///  Whether to log debug info. Default is NO;
+
+/**
+ Whether to log debug info. Default is NO;
+ */
 @property (nonatomic) BOOL debugLogEnabled;
-///  SessionConfiguration will be used to initialize AFHTTPSessionManager. Default is nil.
+
+/**
+ SessionConfiguration will be used to initialize AFHTTPSessionManager. Default is nil.
+ */
 @property (nonatomic, strong) NSURLSessionConfiguration* sessionConfiguration;
 
-///  Add a new URL filter.
+/// Add a new URL filter.
 - (void)addUrlFilter:(id<SQUrlFilterProtocol>)filter;
-///  Remove all URL filters.
+
+/// Remove all URL filters.
 - (void)clearUrlFilter;
-///  Add a new cache path filter
+
+/// Add a new cache path filter
 - (void)addCacheDirPathFilter:(id<SQCacheDirPathFilterProtocol>)filter;
-///  Clear all cache path filters.
+
+/// Clear all cache path filters.
 - (void)clearCacheDirPathFilter;
 
 @end

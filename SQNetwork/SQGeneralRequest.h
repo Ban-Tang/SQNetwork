@@ -15,10 +15,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- A general request subclass of SQRequest. And all the properties is confirm protocol
+ A general request inherited from SQRequest. And all the properties is confirm protocol
  `SQReqest`.
  
- This request will provide several property for easy API requst.
+ This request will provide several properties for easy creating API requst.
  */
 SQ_SUBCLASSING_RESTRICTED
 @interface SQGeneralRequest : SQRequest <SQRequest>
