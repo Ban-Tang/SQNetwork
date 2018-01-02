@@ -327,7 +327,7 @@
         requestError = validationError;
     }
     // Load cached data when failed.
-    if (!succeed) {
+    if (!succeed && !request.ignoreCache) {
         succeed = [[SQNetworkCache shareCache] loadCacheDataWithRequest:request error:&cacheError];
         requestError = requestError ?: cacheError;
     }

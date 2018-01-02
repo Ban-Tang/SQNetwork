@@ -23,9 +23,12 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.platform     = :ios, "8.0"
 
-  s.source       = { :git => "https://git.coding.net/roylee/SQNetwork.git", :tag => "#{s.version}" }
+  s.source       = {
+    :git => "https://git.coding.net/roylee/SQNetwork.git",
+    :tag => "#{s.version}"
+  }
   s.source_files  = "SQNetwork/**/*.{h,m}"
-  s.public_header_files = "SQNetwork/SQNetwork.h"
+  s.public_header_files = "SQNetwork/**/*.h"
 
   s.requires_arc = true
 

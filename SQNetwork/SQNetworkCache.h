@@ -76,21 +76,46 @@ typedef NS_ENUM(NSInteger, SQRequestCacheError) {
 
 /**
  Whether to use cache as response or not.
- Default is NO, means the response will be cached when completed.
- 
- Note that response will always load data from cache when request failed if has cached data.
+ Default is NO, means the response will be cached when completed. And the response will load data from
+ cache when request failed if has cached data.
  */
 @property (nonatomic, assign) BOOL ignoreCache;
 
-/// Default is nil
-///
-/// If it is not nil, the keys in the array will be ignored for create cache path.
+/**
+ Default is nil
+
+ If it is not nil, the keys in the array will be ignored for create cache path.
+ */
 @property (nonatomic, strong) NSArray <NSString *>*ignoreArgumentKeys;
 
-/// Whether cache is asynchronously written to storage. Default is YES.
+/**
+ Whether cache is asynchronously written to storage. Default is YES.
+ */
 @property (nonatomic, assign) BOOL writeCacheAsynchronously;
 
-/// This indicate if the data is load from cache when request completed.
+/**
+ This indicate if the data is load from cache when request completed.
+ */
 @property (nonatomic, readonly, getter=isDataFromCache) BOOL dataFromCache;
+
+
+/**
+ Manually load cache from storage.
+ 
+ @param error If an error occurred causing cache loading failed, an error object will be passed, otherwise NULL.
+ 
+ @return Whether cache is successfully loaded.
+ */
+- (BOOL)loadCacheWithError:(NSError * __autoreleasing *)error;
+
+/**
+ Start request without reading local cache even if it exists. Use this to update local cache.
+ */
+- (void)startWithoutCache;
+
+/**
+ Save response data (probably from another request) to this request's cache location
+ */
+- (void)saveResponseDataToCacheFile:(NSData *)data;
 
 @end

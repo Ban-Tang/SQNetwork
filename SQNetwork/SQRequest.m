@@ -11,26 +11,6 @@
 #import "SQNetworkPrivate.h"
 #import "SQNetworkCache.h"
 
-#ifndef NSFoundationVersionNumber_iOS_8_0
-#define NSFoundationVersionNumber_With_QoS_Available 1140.11
-#else
-#define NSFoundationVersionNumber_With_QoS_Available NSFoundationVersionNumber_iOS_8_0
-#endif
-
-static dispatch_queue_t SQrequest_cache_writing_queue() {
-    static dispatch_queue_t queue;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        dispatch_queue_attr_t attr = DISPATCH_QUEUE_SERIAL;
-        if (NSFoundationVersionNumber >= NSFoundationVersionNumber_With_QoS_Available) {
-            attr = dispatch_queue_attr_make_with_qos_class(attr, QOS_CLASS_BACKGROUND, 0);
-        }
-        queue = dispatch_queue_create("com.bantang.SQrequest.caching", attr);
-    });
-    
-    return queue;
-}
-
 NSString *const SQRequestValidationErrorDomain = @"com.bantang.request.validation";
 
 @interface SQRequest ()
@@ -81,51 +61,51 @@ NSString *const SQRequestValidationErrorDomain = @"com.bantang.request.validatio
     return self.requestTask.originalRequest;
 }
 
-//- (NSData *)responseData {
-//    if (_responseData) {
-//        return _responseData;
-//    }
-//    if (self.cacheData) {
-//        return self.cacheData;
-//    }
-//    return nil;
-//}
-//
-//- (NSString *)responseString {
-//    if (_responseString) {
-//        return _responseString;
-//    }
-//    if (self.cacheString) {
-//        return self.cacheString;
-//    }
-//    return nil;
-//}
-//
-//- (id)responseJSONObject {
-//    if (_responseJSONObject) {
-//        return _responseJSONObject;
-//    }
-//    if (self.cacheJSON) {
-//        return self.cacheJSON;
-//    }
-//    return nil;
-//}
-//
-//- (id)responseObject {
-//    if (_responseObject) {
-//        return _responseObject;
-//    }
-//    if (self.cacheJSON) {
-//        return self.cacheJSON;
-//    }
-//    if (self.cacheXML) {
-//        return self.cacheXML;
-//    }
-//    if (self.cacheData) {
-//        return self.cacheData;
-//    }
-//    return nil;
-//}
+- (NSData *)responseData {
+    if (_responseData) {
+        return _responseData;
+    }
+    if (self.cacheData) {
+        return self.cacheData;
+    }
+    return nil;
+}
+
+- (NSString *)responseString {
+    if (_responseString) {
+        return _responseString;
+    }
+    if (self.cacheString) {
+        return self.cacheString;
+    }
+    return nil;
+}
+
+- (id)responseJSONObject {
+    if (_responseJSONObject) {
+        return _responseJSONObject;
+    }
+    if (self.cacheJSON) {
+        return self.cacheJSON;
+    }
+    return nil;
+}
+
+- (id)responseObject {
+    if (_responseObject) {
+        return _responseObject;
+    }
+    if (self.cacheJSON) {
+        return self.cacheJSON;
+    }
+    if (self.cacheXML) {
+        return self.cacheXML;
+    }
+    if (self.cacheData) {
+        return self.cacheData;
+    }
+    return nil;
+}
 
 - (BOOL)isCancelled {
     if (!self.requestTask) {
@@ -181,33 +161,6 @@ NSString *const SQRequestValidationErrorDomain = @"com.bantang.request.validatio
     [self setCompletionBlockWithSuccess:success failure:failure];
     [self start];
 }
-
-
-#pragma mark - Network Request Delegate
-
-- (void)requestCompletePreprocessor {
-    if (self.ignoreCache || self.isDataFromCache) {
-        return;
-    }
-    // Cache the data.
-    if (self.writeCacheAsynchronously) {
-        dispatch_async(SQrequest_cache_writing_queue(), ^{
-            [[SQNetworkCache shareCache] cacheData:self.responseData forRequest:self];
-        });
-    } else {
-        [[SQNetworkCache shareCache] cacheData:self.responseData forRequest:self];
-    }
-}
-
-- (void)requestCompleteFilter {
-}
-
-- (void)requestFailedPreprocessor {
-}
-
-- (void)requestFailedFilter {
-}
-
 
 #pragma mark - @protocol SQRequest
 

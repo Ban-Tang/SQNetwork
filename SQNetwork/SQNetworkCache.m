@@ -12,6 +12,25 @@
 #import "SQNetworkPrivate.h"
 #import <objc/runtime.h>
 
+#ifndef NSFoundationVersionNumber_iOS_8_0
+#define NSFoundationVersionNumber_With_QoS_Available 1140.11
+#else
+#define NSFoundationVersionNumber_With_QoS_Available NSFoundationVersionNumber_iOS_8_0
+#endif
+
+static dispatch_queue_t SQrequest_cache_writing_queue() {
+    static dispatch_queue_t queue;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        dispatch_queue_attr_t attr = DISPATCH_QUEUE_SERIAL;
+        if (NSFoundationVersionNumber >= NSFoundationVersionNumber_With_QoS_Available) {
+            attr = dispatch_queue_attr_make_with_qos_class(attr, QOS_CLASS_BACKGROUND, 0);
+        }
+        queue = dispatch_queue_create("com.bantang.SQrequest.caching", attr);
+    });
+    return queue;
+}
+
 NSString *const SQRequestCacheErrorDomain = @"com.bantang.request.caching";
 
 @interface SQCacheMetadata : NSObject<NSSecureCoding>
@@ -58,88 +77,8 @@ NSString *const SQRequestCacheErrorDomain = @"com.bantang.request.caching";
 
 
 @interface SQRequest ()
-
 @property (nonatomic, strong) SQCacheMetadata *cacheMetadata;
-
 @end
-
-@implementation SQRequest (CacheExtension)
-
-- (SQCacheMetadata *)cacheMetadata {
-    return objc_getAssociatedObject(self, _cmd);
-}
-
-- (void)setCacheMetadata:(SQCacheMetadata *)cacheMetadata {
-    objc_setAssociatedObject(self, @selector(cacheMetadata), cacheMetadata, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (NSData *)cacheData {
-    return objc_getAssociatedObject(self, _cmd);
-}
-
-- (void)setCacheData:(NSData *)cacheData {
-    objc_setAssociatedObject(self, @selector(cacheData), cacheData, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (NSString *)cacheString {
-    return objc_getAssociatedObject(self, _cmd);
-}
-
-- (void)setCacheString:(NSString *)cacheString {
-    objc_setAssociatedObject(self, @selector(cacheString), cacheString, OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
-
-- (NSString *)cacheJSON {
-    return objc_getAssociatedObject(self, _cmd);
-}
-
-- (void)setCacheJSON:(id)cacheJSON {
-    objc_setAssociatedObject(self, @selector(cacheJSON), cacheJSON, OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
-
-- (NSString *)cacheXML {
-    return objc_getAssociatedObject(self, _cmd);
-}
-
-- (void)setCacheXML:(NSXMLParser *)cacheXML {
-    objc_setAssociatedObject(self, @selector(cacheXML), cacheXML, OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
-
-- (BOOL)ignoreCache {
-    return [objc_getAssociatedObject(self, _cmd) boolValue];
-}
-
-- (void)setIgnoreCache:(BOOL)ignoreCache {
-    objc_setAssociatedObject(self, @selector(ignoreCache), @(ignoreCache), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (NSArray<NSString *> *)ignoreArgumentKeys {
-    return objc_getAssociatedObject(self, _cmd);
-}
-
-- (void)setIgnoreArgumentKeys:(NSArray<NSString *> *)ignoreArgumentKeys {
-    objc_setAssociatedObject(self, @selector(ignoreArgumentKeys), ignoreArgumentKeys, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (BOOL)writeCacheAsynchronously {
-    id flag = objc_getAssociatedObject(self, _cmd);
-    if (flag) {
-        return [flag boolValue];
-    }
-    return YES;
-}
-
-- (void)setWriteCacheAsynchronously:(BOOL)writeCacheAsynchronously {
-    objc_setAssociatedObject(self, @selector(writeCacheAsynchronously), @(writeCacheAsynchronously), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (BOOL)isDataFromCache {
-    return self.cacheData != nil;
-}
-
-@end
-
-
 
 
 @interface SQNetworkCache()
@@ -340,3 +279,107 @@ NSString *const SQRequestCacheErrorDomain = @"com.bantang.request.caching";
 }
 
 @end
+
+
+
+
+@implementation SQRequest (CacheExtension)
+
+- (SQCacheMetadata *)cacheMetadata {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setCacheMetadata:(SQCacheMetadata *)cacheMetadata {
+    objc_setAssociatedObject(self, @selector(cacheMetadata), cacheMetadata, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSData *)cacheData {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setCacheData:(NSData *)cacheData {
+    objc_setAssociatedObject(self, @selector(cacheData), cacheData, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSString *)cacheString {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setCacheString:(NSString *)cacheString {
+    objc_setAssociatedObject(self, @selector(cacheString), cacheString, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (NSString *)cacheJSON {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setCacheJSON:(id)cacheJSON {
+    objc_setAssociatedObject(self, @selector(cacheJSON), cacheJSON, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (NSString *)cacheXML {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setCacheXML:(NSXMLParser *)cacheXML {
+    objc_setAssociatedObject(self, @selector(cacheXML), cacheXML, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (BOOL)ignoreCache {
+    return [objc_getAssociatedObject(self, _cmd) boolValue];
+}
+
+- (void)setIgnoreCache:(BOOL)ignoreCache {
+    objc_setAssociatedObject(self, @selector(ignoreCache), @(ignoreCache), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSArray<NSString *> *)ignoreArgumentKeys {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)setIgnoreArgumentKeys:(NSArray<NSString *> *)ignoreArgumentKeys {
+    objc_setAssociatedObject(self, @selector(ignoreArgumentKeys), ignoreArgumentKeys, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)writeCacheAsynchronously {
+    id flag = objc_getAssociatedObject(self, _cmd);
+    if (flag) {
+        return [flag boolValue];
+    }
+    return YES;
+}
+
+- (void)setWriteCacheAsynchronously:(BOOL)writeCacheAsynchronously {
+    objc_setAssociatedObject(self, @selector(writeCacheAsynchronously), @(writeCacheAsynchronously), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)isDataFromCache {
+    return self.cacheData != nil;
+}
+
+- (BOOL)loadCacheWithError:(NSError * __autoreleasing *)error {
+    return [[SQNetworkCache shareCache] loadCacheDataWithRequest:self error:error];
+}
+
+- (void)startWithoutCache {
+    [self setIgnoreCache:YES];
+    [self start];
+}
+
+- (void)saveResponseDataToCacheFile:(NSData *)data {
+    if (self.ignoreCache || self.isDataFromCache) {
+        return;
+    }
+    // Cache the data.
+    if (self.writeCacheAsynchronously) {
+        dispatch_async(SQrequest_cache_writing_queue(), ^{
+            [[SQNetworkCache shareCache] cacheData:self.responseData forRequest:self];
+        });
+    } else {
+        [[SQNetworkCache shareCache] cacheData:self.responseData forRequest:self];
+    }
+}
+
+@end
+
+

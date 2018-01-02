@@ -16,6 +16,20 @@
 		7D256D8B1FF7BD1700FAEEAD /* SQBatchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D8A1FF7BD1700FAEEAD /* SQBatchRequest.m */; };
 		7D256D8E1FFB774600FAEEAD /* SQBatchRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D8D1FFB774600FAEEAD /* SQBatchRequestAgent.m */; };
 		7D256D901FFB7EBF00FAEEAD /* SQNetwork.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 7D256D8F1FFB7EBF00FAEEAD /* SQNetwork.podspec */; };
+		7D256D911FFB84F700FAEEAD /* SQRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D553CCB1FF652B70041C91C /* SQRequest.m */; };
+		7D256D921FFB84F700FAEEAD /* SQRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D553CCB1FF652B70041C91C /* SQRequest.m */; };
+		7D256D931FFB84FA00FAEEAD /* SQBatchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D8A1FF7BD1700FAEEAD /* SQBatchRequest.m */; };
+		7D256D941FFB84FA00FAEEAD /* SQBatchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D8A1FF7BD1700FAEEAD /* SQBatchRequest.m */; };
+		7D256D951FFB84FD00FAEEAD /* SQBatchRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D8D1FFB774600FAEEAD /* SQBatchRequestAgent.m */; };
+		7D256D961FFB84FD00FAEEAD /* SQBatchRequestAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D8D1FFB774600FAEEAD /* SQBatchRequestAgent.m */; };
+		7D256D971FFB84FF00FAEEAD /* SQNetworkAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D7E1FF7BAAA00FAEEAD /* SQNetworkAgent.m */; };
+		7D256D981FFB850000FAEEAD /* SQNetworkAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D7E1FF7BAAA00FAEEAD /* SQNetworkAgent.m */; };
+		7D256D991FFB850200FAEEAD /* SQNetworkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D841FF7BB2200FAEEAD /* SQNetworkCache.m */; };
+		7D256D9A1FFB850300FAEEAD /* SQNetworkCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D841FF7BB2200FAEEAD /* SQNetworkCache.m */; };
+		7D256D9B1FFB850500FAEEAD /* SQNetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D871FF7BB3700FAEEAD /* SQNetworkConfig.m */; };
+		7D256D9C1FFB850500FAEEAD /* SQNetworkConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D871FF7BB3700FAEEAD /* SQNetworkConfig.m */; };
+		7D256D9D1FFB850700FAEEAD /* SQNetworkPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D811FF7BB1600FAEEAD /* SQNetworkPrivate.m */; };
+		7D256D9E1FFB850800FAEEAD /* SQNetworkPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D811FF7BB1600FAEEAD /* SQNetworkPrivate.m */; };
 		7D553C951FF614540041C91C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D553C941FF614540041C91C /* AppDelegate.m */; };
 		7D553C981FF614540041C91C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D553C971FF614540041C91C /* ViewController.m */; };
 		7D553C9B1FF614540041C91C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D553C991FF614540041C91C /* Main.storyboard */; };
@@ -528,6 +542,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D553CAD1FF614540041C91C /* SQNetworkTests.m in Sources */,
+				7D256D991FFB850200FAEEAD /* SQNetworkCache.m in Sources */,
+				7D256D931FFB84FA00FAEEAD /* SQBatchRequest.m in Sources */,
+				7D256D9B1FFB850500FAEEAD /* SQNetworkConfig.m in Sources */,
+				7D256D951FFB84FD00FAEEAD /* SQBatchRequestAgent.m in Sources */,
+				7D256D911FFB84F700FAEEAD /* SQRequest.m in Sources */,
+				7D256D9D1FFB850700FAEEAD /* SQNetworkPrivate.m in Sources */,
+				7D256D971FFB84FF00FAEEAD /* SQNetworkAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,6 +557,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D553CB81FF614540041C91C /* SQNetworkUITests.m in Sources */,
+				7D256D9A1FFB850300FAEEAD /* SQNetworkCache.m in Sources */,
+				7D256D941FFB84FA00FAEEAD /* SQBatchRequest.m in Sources */,
+				7D256D9C1FFB850500FAEEAD /* SQNetworkConfig.m in Sources */,
+				7D256D961FFB84FD00FAEEAD /* SQBatchRequestAgent.m in Sources */,
+				7D256D921FFB84F700FAEEAD /* SQRequest.m in Sources */,
+				7D256D9E1FFB850800FAEEAD /* SQNetworkPrivate.m in Sources */,
+				7D256D981FFB850000FAEEAD /* SQNetworkAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -686,6 +714,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 865L62UDE9;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jzyd.SQNetwork;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -701,6 +730,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 865L62UDE9;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jzyd.SQNetwork;
 				PRODUCT_NAME = "$(TARGET_NAME)";
