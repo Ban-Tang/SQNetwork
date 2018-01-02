@@ -30,10 +30,13 @@ NSString *const SQRequestValidationErrorDomain = @"com.bantang.request.validatio
 - (instancetype)init {
     self = [super init];
     if (self) {
+        if ([self isMemberOfClass:[SQRequest class]]) {
+            [NSException raise:@"SQRequest Init Error" format:@"SQRequest is an abstract class, only subclass is available.",nil];
+        }
         if ([self conformsToProtocol:@protocol(SQRequest)]) {
             [self setChild:(id<SQRequest>)self];
         }else {
-            [NSException raise:@"Implemention Error" format:@"Subclass must confirm protocol SQRequest.",nil];
+            [NSException raise:@"SQRequest Implemention Error" format:@"Subclass must confirm protocol SQRequest.",nil];
         }
     }
     return self;
