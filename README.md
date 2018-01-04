@@ -31,7 +31,7 @@ SQNetwork 是针对 [AFNetworking](https://github.com/AFNetworking/AFNetworking)
 
 	* `SQRequestAccessory`，网络请求附件协议。通过`-addAccessory:`添加附件。网络请求会在发起、着陆时对每个附件进行回调，因此，附件可以通过这些回调做些自定义的操作，比如添加 loading 等。
 	* `SQRequestFormatter`，数据格式化协议。通过设定代理`dataFormatter`来指定特定的 fromatter，从而实现请求原始数据到特定 modle 的转化。并且，提供了异步线程、主线程两种回调。
-		```objc
+		```objectivec
 		// 如果同时实现这两个方法，第二个方法的返回值会覆盖第一个方法
 		- (nullable id)formattedDataAfterRequestCompletePreprocessor:(__kindof SQRequest *)request;
 		
@@ -41,7 +41,7 @@ SQNetwork 是针对 [AFNetworking](https://github.com/AFNetworking/AFNetworking)
 	
 		> 为什么`SQRequest`要单独提供数据格式化回调，而不是全都交给使用者呢？这里提供统一的回调，可以使请求任务分工更加明确，回调更统一。同时，每个 API 可以指定不同的`dataFormatter`，维护也更方便。
 	* `SQRequestDelegate`，请求任务完成协议。这个协议定义了请求完成的回调方法，并且单独提供格式化数据的回调。一旦实现了请求的自定义格式化，请求成功后会回调下面的方法：
-	  ```objc
+	  ```objectivec
 	  - (void)request:(__kindof SQRequest *)request finishedWithFormattedResponse:(nullable id)response
 	  ```
 	  而没有做数据格式化的请求，成功后的回调如下：
