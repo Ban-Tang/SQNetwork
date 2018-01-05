@@ -89,7 +89,7 @@ NSString *const SQRequestCacheErrorDomain = @"com.bantang.request.caching";
 
 @implementation SQNetworkCache
 
-+ (instancetype)shareCache {
++ (instancetype)sharedCache {
     static id cache = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -358,7 +358,7 @@ NSString *const SQRequestCacheErrorDomain = @"com.bantang.request.caching";
 }
 
 - (BOOL)loadCacheWithError:(NSError * __autoreleasing *)error {
-    return [[SQNetworkCache shareCache] loadCacheDataWithRequest:self error:error];
+    return [[SQNetworkCache sharedCache] loadCacheDataWithRequest:self error:error];
 }
 
 - (void)startWithoutCache {
@@ -373,10 +373,10 @@ NSString *const SQRequestCacheErrorDomain = @"com.bantang.request.caching";
     // Cache the data.
     if (self.writeCacheAsynchronously) {
         dispatch_async(SQrequest_cache_writing_queue(), ^{
-            [[SQNetworkCache shareCache] cacheData:self.responseData forRequest:self];
+            [[SQNetworkCache sharedCache] cacheData:self.responseData forRequest:self];
         });
     } else {
-        [[SQNetworkCache shareCache] cacheData:self.responseData forRequest:self];
+        [[SQNetworkCache sharedCache] cacheData:self.responseData forRequest:self];
     }
 }
 

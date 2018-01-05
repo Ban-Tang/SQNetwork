@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, SQRequestCacheError) {
  
  @return SQNetworkCache global instance
  */
-+ (instancetype)shareCache;
++ (instancetype)sharedCache;
 
 /**
  Init a new cache store with a specific namespace
