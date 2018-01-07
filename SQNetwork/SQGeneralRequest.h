@@ -52,8 +52,6 @@ SQ_SUBCLASSING_RESTRICTED
 
 @property (nonatomic, strong, nullable) id jsonValidator;
 
-@property (nonatomic, assign) BOOL statusCodeValidator;
-
 /**
  Start a request with `requestUrl`, `requestArgument`.
  

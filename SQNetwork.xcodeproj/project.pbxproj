@@ -101,6 +101,7 @@
 		7D553CC91FF643F60041C91C /* SQNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SQNetwork.h; sourceTree = "<group>"; };
 		7D553CCA1FF652B70041C91C /* SQRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SQRequest.h; sourceTree = "<group>"; };
 		7D553CCB1FF652B70041C91C /* SQRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SQRequest.m; sourceTree = "<group>"; };
+		7D5694141FFF7331000A5564 /* SQRequestProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SQRequestProtocol.h; sourceTree = "<group>"; };
 		935D77843E0156956A98EAF9 /* libPods-SQNetworkUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SQNetworkUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C52346B6B5047D6043F37EC /* Pods-SQNetworkTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQNetworkTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SQNetworkTests/Pods-SQNetworkTests.release.xcconfig"; sourceTree = "<group>"; };
 		D0E1F6843BFE7A3FA8175D56 /* Pods-SQNetwork.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQNetwork.release.xcconfig"; path = "Pods/Target Support Files/Pods-SQNetwork/Pods-SQNetwork.release.xcconfig"; sourceTree = "<group>"; };
@@ -185,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				7D553CC91FF643F60041C91C /* SQNetwork.h */,
+				7D5694141FFF7331000A5564 /* SQRequestProtocol.h */,
 				7D553CCA1FF652B70041C91C /* SQRequest.h */,
 				7D553CCB1FF652B70041C91C /* SQRequest.m */,
 				7D256D9F1FFB8F7B00FAEEAD /* SQGeneralRequest.h */,

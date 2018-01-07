@@ -332,6 +332,22 @@
         requestError = requestError ?: cacheError;
     }
     
+    // Filter the raw response data.
+    if (request.dataFilter) {
+        NSError *error = [request.dataFilter filteredErrorWithRequest:request];
+        if (error) {
+            requestError = error;
+            succeed = NO;
+        }else {
+            request.responseObject = [request.dataFilter filteredResultWithRequest:request];
+            if (request.child.responseSerializerType == SQResponseSerializerTypeJSON) {
+                if ([request.responseObject isKindOfClass:[NSDictionary class]] || [request.responseObject isKindOfClass:[NSArray class]]) {
+                    request.responseJSONObject = request.responseObject;
+                }
+            }
+        }
+    }
+    
     if (succeed) {
         [self requestDidSucceedWithRequest:request];
     } else {
@@ -345,35 +361,31 @@
 }
 
 - (void)requestDidSucceedWithRequest:(SQRequest *)request {
-    SQLog(@"SQRequest sucess %@",
-          NSStringFromClass([request class]));
+    SQLog(@"SQRequest sucess %@", NSStringFromClass([request class]));
     __block id formattedData = nil;
     @autoreleasepool {
         if (request.dataFormatter && [request.dataFormatter respondsToSelector:@selector(formattedDataAfterRequestCompletePreprocessor:)]) {
             formattedData = [request.dataFormatter formattedDataAfterRequestCompletePreprocessor:request];
         }
     }
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [request toggleAccessoriesWillStopCallBack];
         
         if (request.dataFormatter && [request.dataFormatter respondsToSelector:@selector(formattedDataAfterRequestCompleteFilter:)]) {
             formattedData = [request.dataFormatter formattedDataAfterRequestCompleteFilter:request];
         }
-        
         if (formattedData) {
-            if (request.delegate) {
+            if ([request.delegate respondsToSelector:@selector(request:finishedWithFormattedResponse:)]) {
                 [request.delegate request:request finishedWithFormattedResponse:formattedData];
             }
-            if (request.successCompletionBlock) {
-                request.successCompletionBlock(request, formattedData);
-            }
         }else {
-            if (request.delegate) {
+            if ([request.delegate respondsToSelector:@selector(requestFinished:)]) {
                 [request.delegate requestFinished:request];
             }
-            if (request.successCompletionBlock) {
-                request.successCompletionBlock(request, nil);
-            }
+        }
+        if (request.successCompletionBlock) {
+            request.successCompletionBlock(request, formattedData);
         }
         
         [request toggleAccessoriesDidStopCallBack];
@@ -404,18 +416,23 @@
     }
     
     @autoreleasepool {
-        [request.dataFormatter requestFailedPreprocessor:request];
+        if ([request.dataFormatter respondsToSelector:@selector(requestFailedPreprocessor:)]) {
+            [request.dataFormatter requestFailedPreprocessor:request];
+        }
     }
     dispatch_async(dispatch_get_main_queue(), ^{
         [request toggleAccessoriesWillStopCallBack];
-        [request.dataFormatter requestFailedFilter:request];
         
-        if (request.delegate != nil) {
+        if ([request.dataFormatter respondsToSelector:@selector(requestFailedFilter:)]) {
+            [request.dataFormatter requestFailedFilter:request];
+        }
+        if ([request.delegate respondsToSelector:@selector(requestFailed:)]) {
             [request.delegate requestFailed:request];
         }
         if (request.failureCompletionBlock) {
             request.failureCompletionBlock(request, nil);
         }
+        
         [request toggleAccessoriesDidStopCallBack];
     });
 }

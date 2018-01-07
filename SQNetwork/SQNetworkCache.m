@@ -18,7 +18,7 @@
 #define NSFoundationVersionNumber_With_QoS_Available NSFoundationVersionNumber_iOS_8_0
 #endif
 
-static dispatch_queue_t SQrequest_cache_writing_queue() {
+static dispatch_queue_t sqrequest_cache_writing_queue() {
     static dispatch_queue_t queue;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -372,7 +372,7 @@ NSString *const SQRequestCacheErrorDomain = @"com.bantang.request.caching";
     }
     // Cache the data.
     if (self.writeCacheAsynchronously) {
-        dispatch_async(SQrequest_cache_writing_queue(), ^{
+        dispatch_async(sqrequest_cache_writing_queue(), ^{
             [[SQNetworkCache sharedCache] cacheData:self.responseData forRequest:self];
         });
     } else {

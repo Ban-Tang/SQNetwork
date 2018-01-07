@@ -10,6 +10,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFNetworking.h>
+#import "SQRequestProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -71,85 +72,6 @@ typedef void (^AFURLSessionTaskProgressBlock)(NSProgress *);
 typedef void (^SQRequestCompletionBlock)(__kindof SQRequest *request, __nullable id formattedData);
 
 
-/**
- The SQRequestAccessory protocol defines several optional methods that can be
- used to track the status of a request. Objects that conforms this protocol
- ("accessories") can perform additional configurations accordingly. All the
- accessory methods will be called on the main queue.
- */
-@protocol SQRequestAccessory <NSObject>
-
-@optional
-
-/**
- Inform the accessory that the request is about to start.
- 
- @param Request The corresponding request operation.
- */
-- (void)requestWillStart:(id)Request;
-
-/**
- Inform the accessory that the request is about to stop. This method is called
- before executing `requestFinished` and `successCompletionBlock`.
- 
- @param Request The corresponding request operation.
- */
-- (void)requestWillStop:(id)Request;
-
-/**
- Inform the accessory that the request has already stoped. This method is called
- after executing `requestFinished` and `successCompletionBlock`.
- 
- @param Request The corresponding request operation.
- */
-- (void)requestDidStop:(id)Request;
-
-@end
-
-
-
-
-
-/**
- The SQRequestFormatter protocol defines several optional methods that can be
- used for formatting the response data. You can use these method to convert the response
- json to target model.
- */
-@protocol SQRequestFormatter <NSObject>
-
-@optional
-/**
- Called on background thread after request succeded but before switching to main thread. Note if
- the request is failed for http, the cached data will be used instead.
- 
- @return  return the formatted data, it can be the final model or reformed dictionary.
- */
-- (nullable id)formattedDataAfterRequestCompletePreprocessor:(__kindof SQRequest *)request;
-
-/**
- Called on the main thread after request succeeded.
- If both implement mehtod `formattedDataAfterRequestCompletePreprocessor`, the formatted data will be
- replaced by below method.
- 
- @return  return the formatted data, it can be the final model or reformed dictionary.
- */
-- (nullable id)formattedDataAfterRequestCompleteFilter:(__kindof SQRequest *)request;
-
-/**
- Called on background thread after request failed but before switching to main thread. See also
- `requestCompletePreprocessor`.
- */
-- (void)requestFailedPreprocessor:(__kindof SQRequest *)request;
-
-/**
- Called on the main thread when request failed.
- */
-- (void)requestFailedFilter:(__kindof SQRequest *)request;
-
-@end
-
-
-
 
 /**
  The SQRequestDelegate protocol defines several optional methods you can use
@@ -172,7 +94,6 @@ typedef void (^SQRequestCompletionBlock)(__kindof SQRequest *request, __nullable
  @param request The corresponding Request.
  */
 - (void)requestFailed:(__kindof SQRequest *)request;
-
 
 /**
  Tell the delegate that the request has finished successfully with the formatted data. This method
@@ -326,9 +247,13 @@ typedef void (^SQRequestCompletionBlock)(__kindof SQRequest *request, __nullable
  */
 @property (nonatomic, strong, nullable) NSDictionary *userInfo;
 
+/**
+ Data filter used to filter the raw data. Default is nil.
+ */
+@property (nonatomic, weak, nullable) id<SQRequestFilter> dataFilter;
 
 /**
- Data formatter used to format the data to target model. Default is nil.
+ Data formatter used to format the data to target model (JSON -> MODEL). Default is nil.
  */
 @property (nonatomic, weak, nullable) id<SQRequestFormatter> dataFormatter;
 
@@ -368,10 +293,10 @@ typedef void (^SQRequestCompletionBlock)(__kindof SQRequest *request, __nullable
  This value is used to perform resumable download request. Default is nil.
  
  @discussion NSURLSessionDownloadTask is used when this value is not nil.
- The exist file at the path will be removed before the request starts. If request succeed, file will
- be saved to this path automatically, otherwise the response will be saved to `responseData`
- and `responseString`. For this to work, server must support `Range` and response with
- proper `Last-Modified` and/or `Etag`. See `NSURLSessionDownloadTask` for more detail.
+             The exist file at the path will be removed before the request starts. If request succeed, file will
+             be saved to this path automatically, otherwise the response will be saved to `responseData`
+             and `responseString`. For this to work, server must support `Range` and response with
+             proper `Last-Modified` and/or `Etag`. See `NSURLSessionDownloadTask` for more detail.
  */
 @property (nonatomic, strong, nullable) NSString *resumableDownloadPath;
 
