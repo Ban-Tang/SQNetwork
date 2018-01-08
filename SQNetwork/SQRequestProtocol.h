@@ -40,11 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable id)filteredResultWithRequest:(__kindof SQRequest *)request;
 
 /**
- Called on the main thread after request succeeded.
- If both implement mehtod `formattedDataAfterRequestCompletePreprocessor`, the formatted data will be
- replaced by below method.
+ Override this method to define the custom error.
  
- @return  return the formatted data, it can be the final model or reformed dictionary.
+ @return  return the custom rpc error, this error may be defined by your service.
  */
 - (nullable NSError *)filteredErrorWithRequest:(__kindof SQRequest *)request;
 

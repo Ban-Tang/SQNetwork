@@ -11,6 +11,7 @@ SQNetwork 是针对 [AFNetworking](https://github.com/AFNetworking/AFNetworking)
 ```
     .
     ├── SQNetwork：Public 头文件
+    │   ├── SQRequestProtocol：请求过滤协议等
     │   ├── SQRequest：网络 API 抽象基类，所有自定义 API 都要继承此类
     │   │   ├── SQNetworkAgent：底层对 AFN 封装的工具类，负责网络的实际请求
     │   │   ├── SQNetworkCache：缓存
@@ -27,9 +28,21 @@ SQNetwork 是针对 [AFNetworking](https://github.com/AFNetworking/AFNetworking)
 
 - SQNetwork 是基于 YTKNetwork 设计思想的改进，每个网络请求都被封装成一个对象。所以，你的每一个请求都需要继承 `SQRequest` 类，通过实现 `SQRequest` 协议定义的一些方法来构造配置指定的网络请求。
 
-- 在文件`SQRequest.h`中，定义了几个协议来丰富网络请求的处理：
+- 协议文件`SQRequestProtocol`中，定义了请求、返回值过滤等协议，来丰富网络请求的处理：
 
 	* `SQRequestAccessory`，网络请求附件协议。通过`-addAccessory:`添加附件。网络请求会在发起、着陆时对每个附件进行回调，因此，附件可以通过这些回调做些自定义的操作，比如添加 loading 等。
+	* `SQRequestFilter`，RPC 数据格转化协议。通过设定代理`dataFilter`来指定特定的 filter，实现对原始数据的 RPC 转化，同时，可以在这里对所有请求的回调做公共处理。
+	
+		```objc
+		// 返回 response 中有效的返回值结果节点数据
+		- (nullable id)filteredResultWithRequest:(__kindof SQRequest *)request;
+
+		// 根据请求返回值数据，判定返回结果是否有效，这里通常可以根据
+		// 自己服务端自定义的错误码来判断，也可以在这里对所有 error
+		// 做统一处理
+		- (nullable NSError *)filteredErrorWithRequest:(__kindof SQRequest *)request
+		```
+		
 	* `SQRequestFormatter`，数据格式化协议。通过设定代理`dataFormatter`来指定特定的 fromatter，从而实现请求原始数据到特定 modle 的转化。并且，提供了异步线程、主线程两种回调。
 	
 		```objc
@@ -37,10 +50,13 @@ SQNetwork 是针对 [AFNetworking](https://github.com/AFNetworking/AFNetworking)
 		- (nullable id)formattedDataAfterRequestCompletePreprocessor:(__kindof SQRequest *)request;
 		
 		- (nullable id)formattedDataAfterRequestCompleteFilter:(__kindof SQRequest *)request
-
 		```
 	
 		> 为什么`SQRequest`要单独提供数据格式化回调，而不是全都交给使用者呢？这里提供统一的回调，可以使请求任务分工更加明确，回调更统一。同时，每个 API 可以指定不同的`dataFormatter`，维护也更方便。
+
+
+- 在文件`SQRequest.h`中的协议，定义了网络请求的配置与最终回调：
+
 	* `SQRequestDelegate`，请求任务完成协议。这个协议定义了请求完成的回调方法，并且单独提供格式化数据的回调。一旦实现了请求的自定义格式化，请求成功后会回调下面的方法：
 	
 	  ```objc

@@ -114,7 +114,7 @@ typedef NS_ENUM(NSInteger, SQRequestCacheError) {
 - (void)startWithoutCache;
 
 /**
- Save response data (probably from another request) to this request's cache location
+ Save response data to this request's cache location
  */
 - (void)saveResponseDataToCacheFile:(NSData *)data;
 

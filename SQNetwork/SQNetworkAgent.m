@@ -328,7 +328,7 @@
     }
     // Load cached data when failed.
     if (!succeed && !request.ignoreCache) {
-        succeed = [[SQNetworkCache sharedCache] loadCacheDataWithRequest:request error:&cacheError];
+        succeed = [request loadCacheWithError:&cacheError];
         requestError = requestError ?: cacheError;
     }
     
@@ -349,6 +349,7 @@
     }
     
     if (succeed) {
+        [request saveResponseDataToCacheFile:request.responseData];
         [self requestDidSucceedWithRequest:request];
     } else {
         [self requestDidFailWithRequest:request error:requestError];
