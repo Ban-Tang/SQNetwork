@@ -13,11 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class SQRequest;
 /**
- The SQRequestFilter protocol defines several optional methods that can be used for
+ The SQResponseFilter protocol defines several optional methods that can be used for
  filter the raw response data. You can use these method to convert the original response
  to RPC response object.
  */
-@protocol SQRequestFilter <NSObject>
+@protocol SQResponseFilter <NSObject>
 
 /**
  Called on background thread after request succeded.
@@ -51,11 +51,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- The SQRequestFormatter protocol defines several optional methods that can be
+ The SQResponseFormatter protocol defines several optional methods that can be
  used for formatting the response data. You can use these method to convert the response
  json to target model.
  */
-@protocol SQRequestFormatter <NSObject>
+@protocol SQResponseFormatter <NSObject>
 
 @optional
 /**

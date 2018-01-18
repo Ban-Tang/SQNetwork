@@ -31,6 +31,7 @@
 		7D256D9D1FFB850700FAEEAD /* SQNetworkPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D811FF7BB1600FAEEAD /* SQNetworkPrivate.m */; };
 		7D256D9E1FFB850800FAEEAD /* SQNetworkPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256D811FF7BB1600FAEEAD /* SQNetworkPrivate.m */; };
 		7D256DA11FFB8F7B00FAEEAD /* SQGeneralRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D256DA01FFB8F7B00FAEEAD /* SQGeneralRequest.m */; };
+		7D26AF97201038A600FFFC92 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7D26AF96201038A600FFFC92 /* README.md */; };
 		7D553C951FF614540041C91C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D553C941FF614540041C91C /* AppDelegate.m */; };
 		7D553C981FF614540041C91C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D553C971FF614540041C91C /* ViewController.m */; };
 		7D553C9B1FF614540041C91C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D553C991FF614540041C91C /* Main.storyboard */; };
@@ -82,6 +83,7 @@
 		7D256D8F1FFB7EBF00FAEEAD /* SQNetwork.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SQNetwork.podspec; sourceTree = "<group>"; };
 		7D256D9F1FFB8F7B00FAEEAD /* SQGeneralRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SQGeneralRequest.h; sourceTree = "<group>"; };
 		7D256DA01FFB8F7B00FAEEAD /* SQGeneralRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SQGeneralRequest.m; sourceTree = "<group>"; };
+		7D26AF96201038A600FFFC92 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7D553C901FF614540041C91C /* SQNetwork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SQNetwork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D553C931FF614540041C91C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7D553C941FF614540041C91C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				7D256D8F1FFB7EBF00FAEEAD /* SQNetwork.podspec */,
+				7D26AF96201038A600FFFC92 /* README.md */,
 				7D553C921FF614540041C91C /* SQNetwork */,
 				7D553CC51FF614650041C91C /* Supporting Files */,
 				7D553CAB1FF614540041C91C /* SQNetworkTests */,
@@ -358,6 +361,7 @@
 			files = (
 				7D553CA01FF614540041C91C /* LaunchScreen.storyboard in Resources */,
 				7D553C9D1FF614540041C91C /* Assets.xcassets in Resources */,
+				7D26AF97201038A600FFFC92 /* README.md in Resources */,
 				7D553C9B1FF614540041C91C /* Main.storyboard in Resources */,
 				7D256D901FFB7EBF00FAEEAD /* SQNetwork.podspec in Resources */,
 			);

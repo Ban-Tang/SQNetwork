@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class SQRequest;
 @class AFSecurityPolicy;
+@protocol SQResponseFilter;
 
 /**
  SQUrlFilterProtocol can be used to append common parameters to requests before sending them.
@@ -74,6 +75,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) id<SQUrlFilterProtocol> urlFilter;
 
 /**
+ Response result filters. See also `SQResponseFilter`.
+ Note that, only the `dataFilter` of a request is nil, this property will be effect.
+ */
+@property (nonatomic, strong, readonly) id<SQResponseFilter> dataFilter;
+
+/**
  Cache path filters. See also `SQCacheDirPathFilterProtocol`.
  */
 @property (nonatomic, strong, readonly) NSArray<id<SQCacheDirPathFilterProtocol>> *cacheDirPathFilters;
@@ -98,6 +105,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Remove all URL filters.
 - (void)clearUrlFilter;
+
+/// Add a new response filter.
+- (void)addResponseFilter:(id<SQResponseFilter>)filter;
+
+/// Remove all response filters.
+- (void)clearResponselFilter;
 
 /// Add a new cache path filter
 - (void)addCacheDirPathFilter:(id<SQCacheDirPathFilterProtocol>)filter;

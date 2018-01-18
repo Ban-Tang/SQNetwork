@@ -333,13 +333,14 @@
     }
     
     // Filter the raw response data.
-    if (request.dataFilter) {
-        NSError *error = [request.dataFilter filteredErrorWithRequest:request];
+    id<SQResponseFilter> dataFilter = request.dataFilter ?: [SQNetworkConfig sharedConfig].dataFilter;
+    if (dataFilter) {
+        NSError *error = [dataFilter filteredErrorWithRequest:request];
         if (error) {
             requestError = error;
             succeed = NO;
         }else {
-            request.responseObject = [request.dataFilter filteredResultWithRequest:request];
+            request.responseObject = [dataFilter filteredResultWithRequest:request];
             if (request.child.responseSerializerType == SQResponseSerializerTypeJSON) {
                 if ([request.responseObject isKindOfClass:[NSDictionary class]] || [request.responseObject isKindOfClass:[NSArray class]]) {
                     request.responseJSONObject = request.responseObject;

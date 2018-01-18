@@ -49,6 +49,14 @@
     _urlFilter = nil;
 }
 
+- (void)addResponseFilter:(id<SQResponseFilter>)filter {
+    _dataFilter = filter;
+}
+
+- (void)clearResponselFilter {
+    _dataFilter = nil;
+}
+
 - (void)addCacheDirPathFilter:(id<SQCacheDirPathFilterProtocol>)filter {
     if (_cacheDirPathFilters == nil) {
         _cacheDirPathFilters = [NSMutableArray arrayWithCapacity:0];

@@ -12,6 +12,9 @@ SQNetwork 是针对 [AFNetworking](https://github.com/AFNetworking/AFNetworking)
     .
     ├── SQNetwork：Public 头文件
     │   ├── SQRequestProtocol：请求过滤协议等
+    │   │   ├── SQResponseFilter：原始 JSON 返回值 RPC 解析协议，可以对原始 JSON 进行复核项目需求的处理
+    │   │   ├── SQResponseFormatter：请求数据格式化协议，用于将原始 JSON 转为目标 MODEL
+    │   │   └── SQRequestAccessory：请求附件协议，整个请求过程中会对相应的附件发起回调
     │   ├── SQRequest：网络 API 抽象基类，所有自定义 API 都要继承此类
     │   │   ├── SQNetworkAgent：底层对 AFN 封装的工具类，负责网络的实际请求
     │   │   ├── SQNetworkCache：缓存
@@ -31,7 +34,7 @@ SQNetwork 是针对 [AFNetworking](https://github.com/AFNetworking/AFNetworking)
 - 协议文件`SQRequestProtocol`中，定义了请求、返回值过滤等协议，来丰富网络请求的处理：
 
 	* `SQRequestAccessory`，网络请求附件协议。通过`-addAccessory:`添加附件。网络请求会在发起、着陆时对每个附件进行回调，因此，附件可以通过这些回调做些自定义的操作，比如添加 loading 等。
-	* `SQRequestFilter`，RPC 数据格转化协议。通过设定代理`dataFilter`来指定特定的 filter，实现对原始数据的 RPC 转化，同时，可以在这里对所有请求的回调做公共处理。
+	* `SQResponseFilter`，RPC 数据格转化协议。通过设定代理`dataFilter`来指定特定的 filter，实现对原始数据的 RPC 转化，同时，可以在这里对所有请求的回调做公共处理。
 	
 		```objc
 		// 返回 response 中有效的返回值结果节点数据
@@ -43,7 +46,7 @@ SQNetwork 是针对 [AFNetworking](https://github.com/AFNetworking/AFNetworking)
 		- (nullable NSError *)filteredErrorWithRequest:(__kindof SQRequest *)request
 		```
 		
-	* `SQRequestFormatter`，数据格式化协议。通过设定代理`dataFormatter`来指定特定的 fromatter，从而实现请求原始数据到特定 modle 的转化。并且，提供了异步线程、主线程两种回调。
+	* `SQResponseFormatter`，数据格式化协议。通过设定代理`dataFormatter`来指定特定的 fromatter，从而实现请求原始数据到特定 modle 的转化。并且，提供了异步线程、主线程两种回调。
 	
 		```objc
 		// 如果同时实现这两个方法，第二个方法的返回值会覆盖第一个方法
@@ -79,7 +82,7 @@ SQNetwork 是针对 [AFNetworking](https://github.com/AFNetworking/AFNetworking)
 
 - 对于比较简单的 API，单独建个类可能会有些多余，同时导致类过多的爆炸（离散式 API 的缺点，因此离散式 API 更适合模块化、复杂的请求）。所以，提供了`SQGeneralRequest`，并通过属性完成简单的配置，然后发起请求。
 
-- `SQNetworkConfig`提供了全局的请求配置，在这里可以添加实现协议 `SQUrlFilterProtocol` 的自定义 url filter，来实现全局请求的基础、公共配置等。
+- `SQNetworkConfig`提供了全局的请求配置，在这里可以添加实现协议 `SQUrlFilterProtocol` 的自定义 url filter，来实现全局请求的基础、公共配置，以及添加遵守 RPC 协议`SQResponseFilter`的返回值 data filter，根据实际需求将原始 JSON 转化为符合场景的 JSON。
 
 
 ### 引用：

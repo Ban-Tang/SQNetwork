@@ -180,7 +180,7 @@ NSString *const SQRequestValidationErrorDomain = @"com.bantang.request.validatio
 }
 
 - (NSTimeInterval)requestTimeoutInterval {
-    return 20.f;
+    return 60.f;
 }
 
 - (SQRequestMethod)requestMethod {

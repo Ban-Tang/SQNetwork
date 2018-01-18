@@ -98,11 +98,11 @@ typedef void (^SQRequestCompletionBlock)(__kindof SQRequest *request, __nullable
 /**
  Tell the delegate that the request has finished successfully with the formatted data. This method
  only will be called when the `dataFormatter` of this request implement formatter methods in protocol
- `SQRequestFormatter`.
+ `SQResponseFormatter`.
  
  @param request   The corresponding Request.
  
- @param response  Fromatted response data by request formatter confirmed protocol `SQRequestFormatter`.
+ @param response  Fromatted response data by request formatter confirmed protocol `SQResponseFormatter`.
  */
 - (void)request:(__kindof SQRequest *)request finishedWithFormattedResponse:(nullable id)response;
 
@@ -148,7 +148,7 @@ typedef void (^SQRequestCompletionBlock)(__kindof SQRequest *request, __nullable
 - (NSString *)cdnUrl;
 
 /**
- Requset timeout interval. Default is 20s.
+ Requset timeout interval. Default is 60s.
  
  @discussion When using `resumableDownloadPath`(NSURLSessionDownloadTask), the session seems to completely ignore
              `timeoutInterval` property of `NSURLRequest`. One effective way to set timeout would be using
@@ -248,14 +248,18 @@ typedef void (^SQRequestCompletionBlock)(__kindof SQRequest *request, __nullable
 @property (nonatomic, strong, nullable) NSDictionary *userInfo;
 
 /**
- Data filter used to filter the raw data. Default is nil.
- */
-@property (nonatomic, weak, nullable) id<SQRequestFilter> dataFilter;
+ Data filter used to filter the raw response data. Default is nil.
+ 
+ When this is nil, the filter of `SQNetworkConfig` will be used. And the filtered RPC data
+ will be stored in property `responseObject`, if the `responseSerializerType` is
+ SQResponseSerializerTypeJSON, the property `responseJSONObject` also will be usefull.
+ */ 
+@property (nonatomic, weak, nullable) id<SQResponseFilter> dataFilter;
 
 /**
  Data formatter used to format the data to target model (JSON -> MODEL). Default is nil.
  */
-@property (nonatomic, weak, nullable) id<SQRequestFormatter> dataFormatter;
+@property (nonatomic, weak, nullable) id<SQResponseFormatter> dataFormatter;
 
 /**
  The delegate object of the request. If you choose block style callback you can ignore this.
